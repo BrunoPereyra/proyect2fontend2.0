@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import LinkedinLogo from "../../../assets/linkedinLogo.png";
-import user from "../../../assets/user.png";
 import SearchUsers from "../SearchUsers";
 import {
   AiOutlineHome,
@@ -23,7 +22,7 @@ export default function Topbar({ currentUser }) {
   const [searchInput, setSearchInput] = useState("");
   let navigate = useNavigate();
   const goToRoute = (route) => {
-    // navigate(route);
+    navigate(route);
   };
 
   const displayPopup = () => {
@@ -63,6 +62,7 @@ export default function Topbar({ currentUser }) {
   }, [searchInput]);
 
   useEffect(() => {
+    console.log(currentUser,"---");
     getAllUsers(setUsers);
   }, []);
   return (
@@ -105,7 +105,7 @@ export default function Topbar({ currentUser }) {
       )}
       <img
         className="user-logo"
-        src={currentUser?.imageLink}
+        src={currentUser.avatar}
         alt="user"
         onClick={displayPopup}
       />
