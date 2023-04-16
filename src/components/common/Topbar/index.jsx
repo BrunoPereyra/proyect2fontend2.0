@@ -23,7 +23,7 @@ export default function Topbar({ currentUser }) {
   const [searchInput, setSearchInput] = useState("");
   let navigate = useNavigate();
   const goToRoute = (route) => {
-    navigate(route);
+    // navigate(route);
   };
 
   const displayPopup = () => {

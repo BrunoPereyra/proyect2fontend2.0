@@ -23,7 +23,7 @@ const createUser = async (formData) => {
 const LoginUser = async (newObject) => {
     const config = {
         headers: {
-            Authorization: `bearer ${token}`
+            Authorization: `Bearer ${token}`
         }
     }
     const res = await axios.post(`${baseUrl}/login`, newObject, config)
@@ -32,7 +32,7 @@ const LoginUser = async (newObject) => {
 const searchRefService = async (newObject) => {
     const config = {
         headers: {
-            Authorization: `bearer ${token}`
+            Authorization: `Bearer ${token}`
         }
     }
 
@@ -46,98 +46,26 @@ const searchRefService = async (newObject) => {
     )
     return res
 }
-const ProfileGet = async (newObject) => {
+const Currentuser = async (newObject) => {
     const config = {
         headers: {
-            Authorization: `bearer ${token}`
+            Authorization: `Bearer ${token}`
         }
     }
 
     const res = await axios.get(
-        `${baseUrl}/ProfileGet`,
+        `${baseUrl}/currentuser`,
         config
     )
     return res
 }
 
-const GetNotes = async (newObject) => {
-    const config = {
-        headers: {
-            Authorization: `bearer ${token}`
-        }
-    }
 
-    const res = await axios.get(
-        `${baseUrl}/GetNotes`,
-        config
-    )
-    return res
-}
-
-const createServiceBasic = async (formData) => {
-
-    const config = {
-        headers: {
-            "Authorization": `bearer ${token}`,
-            "Content-Type": 'multipart/form-data'
-        }
-    }
-    const res = await axios.post(
-        `${baseUrl}/createServiceBasic`,
-        formData,
-        config
-    )
-    return res
-
-}
-const ProfileGetOther = async (newObject) => {
-
-    const config = {
-        headers: {
-            "Authorization": `bearer ${token}`,
-        }
-    }
-    const res = await axios.post(
-        `${baseUrl}/ProfileGetOther`,
-        newObject,
-        config
-    )
-    return res
-}
-const Onechat = async (newObject) => {
-    const config = {
-        headers: {
-            Authorization: `bearer ${token}`
-        }
-    }
-    const res = await axios.get(
-        `${baseUrl}/api/messages?recipientId=${newObject}`,
-        config
-    )
-    return res
-}
-const GetAllChats = async () => {
-    const config = {
-        headers: {
-            Authorization: `bearer ${token}`
-        }
-    }
-    const res = await axios.get(
-        `${baseUrl}/GetAllChats`,
-        config
-    )
-    return res
-}
 const exportedObject = {
-    createUser,
     LoginUser,
     setToken,
     searchRefService,
-    ProfileGet,
-    ProfileGetOther,
-    GetNotes,
-    createServiceBasic,
-    Onechat,
-    GetAllChats
+    Currentuser,
+
 }
 export default exportedObject

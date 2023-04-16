@@ -19,8 +19,8 @@ export default function PostStatus({ currentUser }) {
     let object = {
       status: status,
       timeStamp: getCurrentTimeStamp("LLL"),
-      userEmail: currentUser.email,
-      userName: currentUser.name,
+      userEmail: currentUser.Email,
+      userName: currentUser.NameUser,
       postID: getUniqueID(),
       userID: currentUser.id,
       postImage: postImage,
@@ -50,14 +50,14 @@ export default function PostStatus({ currentUser }) {
   return (
     <div className="post-status-main">
       <div className="user-details">
-        <img src={currentUser?.imageLink} alt="imageLink" />
-        <p className="name">{currentUser?.name}</p>
+        <img src={currentUser.avatar} alt="imageLink" />
+        <p className="name">{currentUser.NameUser}</p>
         <p className="headline">{currentUser?.headline}</p>
       </div>
       <div className="post-status">
         <img
           className="post-image"
-          src={currentUser?.imageLink}
+          src={currentUser.avatar}
           alt="imageLink"
         />
         <button
