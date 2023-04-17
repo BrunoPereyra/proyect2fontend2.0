@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, Progress } from "antd";
+import { Button, Modal } from "antd";
 import { AiOutlinePicture } from "react-icons/ai";
 import ReactQuill from "react-quill";
 import "./index.scss";
@@ -12,13 +12,13 @@ const ModalComponent = ({
   status,
   isEdit,
   updateStatus,
-  uploadPostImage,
   setPostImage,
   postImage,
   currentPost,
   setCurrentPost,
 }) => {
   const [progress, setProgress] = useState(0);
+  console.log(status,postImage); 
   return (
     <>
       <Modal
@@ -56,13 +56,6 @@ const ModalComponent = ({
             placeholder="Share Something Useful.."
             onChange={setStatus}
           />
-          {progress === 0 || progress === 100 ? (
-            <></>
-          ) : (
-            <div className="progress-bar">
-              <Progress type="circle" percent={progress} />
-            </div>
-          )}
           {postImage?.length > 0 || currentPost?.postImage?.length ? (
             <img
               className="preview-image"
@@ -80,9 +73,7 @@ const ModalComponent = ({
           id="pic-upload"
           type={"file"}
           hidden
-          onChange={(event) =>
-            uploadPostImage(event.target.files[0], setPostImage, setProgress)
-          }
+          onChange={(event) => setPostImage(event.target.files[0])}
         />
       </Modal>
     </>

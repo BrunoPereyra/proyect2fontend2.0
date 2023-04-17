@@ -8,7 +8,7 @@ export default function Home({ currentUser }) {
   const [loading, setLoading] = useState(true);
   let navigate = useNavigate();
   useEffect(() => {
-      if (currentUser.id) {
+      if (currentUser.avatar) {
         navigate("/");
       } else {
         setLoading(false);

@@ -6,7 +6,6 @@ import Loader from "../components/common/Loader";
 export default function Profile({ currentUser }) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  console.log(currentUser);
   useEffect(() => {
       if (currentUser.id) {
         navigate("/");
