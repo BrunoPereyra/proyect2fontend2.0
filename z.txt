@@ -1,0 +1,1 @@
+crear nueva ruta en api para poder subir los post

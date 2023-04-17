@@ -1,34 +1,18 @@
-import React, { useState, useMemo } from "react";
-import { postStatus, getStatus, updatePost } from "../../../api/FirestoreAPI";
-import { getCurrentTimeStamp } from "../../../helpers/useMoment";
+import React, { useState, useMemo, useEffect } from "react";
+import { updatePost } from "../../../api/FirestoreAPI";
 import ModalComponent from "../Modal";
-import { getUniqueID } from "../../../helpers/getUniqueId";
 import PostsCard from "../PostsCard";
 import "./index.scss";
+import service from '../../../services/service'
 
 export default function PostStatus({ currentUser }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [status, setStatus] = useState("");
-  const [allStatuses, setAllStatus] = useState([]);
+  const [Posts, setPost] = useState([]);
   const [currentPost, setCurrentPost] = useState({});
   const [isEdit, setIsEdit] = useState(false);
   const [postImage, setPostImage] = useState("");
 
-  const sendStatus = async () => {
-    let object = {
-      status: status,
-      timeStamp: getCurrentTimeStamp("LLL"),
-      userEmail: currentUser.Email,
-      userName: currentUser.NameUser,
-      postID: getUniqueID(),
-      userID: currentUser.id,
-      postImage: postImage,
-    };
-    await postStatus(object);
-    await setModalOpen(false);
-    setIsEdit(false);
-    await setStatus("");
-  };
 
   const getEditData = (posts) => {
     setModalOpen(true);
@@ -42,9 +26,14 @@ export default function PostStatus({ currentUser }) {
     setModalOpen(false);
   };
 
-  useMemo(() => {
-    getStatus(setAllStatus);
-  }, []);
+  async function getPost() {
+    const res = await service.GetPost()
+    console.log(res.data.data);
+    setPost(res.data.data)
+  }
+  useEffect(() => {
+    getPost()
+  }, [])
 
   return (
     <div className="post-status-main">
@@ -75,7 +64,6 @@ export default function PostStatus({ currentUser }) {
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         status={status}
-        sendStatus={sendStatus}
         isEdit={isEdit}
         updateStatus={updateStatus}
         postImage={postImage}
@@ -85,7 +73,7 @@ export default function PostStatus({ currentUser }) {
       />
 
       <div>
-        {allStatuses.map((posts) => {
+        {Posts.map((posts) => {
           return (
             <div key={posts.id}>
               <PostsCard posts={posts} getEditData={getEditData} />

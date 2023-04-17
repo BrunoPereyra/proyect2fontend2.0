@@ -3,6 +3,9 @@ import { Button, Modal } from "antd";
 import { AiOutlinePicture } from "react-icons/ai";
 import ReactQuill from "react-quill";
 import "./index.scss";
+import service from '../../../services/service';
+
+
 
 const ModalComponent = ({
   modalOpen,
@@ -17,8 +20,20 @@ const ModalComponent = ({
   currentPost,
   setCurrentPost,
 }) => {
-  const [progress, setProgress] = useState(0);
-  console.log(status,postImage); 
+  async function Postupload() {
+    console.log(status, postImage);
+    const formData = new FormData();
+
+    formData.append("Status", status);
+    formData.append("PostImage", postImage);
+    try {
+      const res = await service.Postupload(formData)
+      console.log(res);
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <>
       <Modal
@@ -39,7 +54,7 @@ const ModalComponent = ({
         }}
         footer={[
           <Button
-            onClick={isEdit ? updateStatus : sendStatus}
+            onClick={isEdit ? updateStatus : Postupload}
             key="submit"
             type="primary"
             disabled={status.length > 0 ? false : true}

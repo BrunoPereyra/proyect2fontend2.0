@@ -59,13 +59,41 @@ const Currentuser = async (newObject) => {
     )
     return res
 }
+const Postupload = async (FormData) => {
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": 'multipart/form-data'
+        }
+    }
 
+    const res = await axios.post(
+        `${baseUrl}/UploadPost`,
+        FormData,
+        config
+    )
+    return res
+}
 
+const GetPost = async (FormData) => {
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token}`,
+        }
+    }
+
+    const res = await axios.get(
+        `${baseUrl}/getPost`,
+        config
+    )
+    return res
+}
 const exportedObject = {
     LoginUser,
     setToken,
     searchRefService,
     Currentuser,
-
+    Postupload,
+    GetPost
 }
 export default exportedObject

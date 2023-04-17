@@ -72,10 +72,10 @@ export default function PostsCard({ posts, id, getEditData }) {
           <p className="timestamp">{posts.timeStamp}</p>
         </div>
       </div>
-      {posts.postImage ? (
+      {posts.PostImage ? (
         <img
           onClick={() => setImageModal(true)}
-          src={posts.postImage}
+          src={posts.PostImage}
           className="post-image"
           alt="post-image"
         />
