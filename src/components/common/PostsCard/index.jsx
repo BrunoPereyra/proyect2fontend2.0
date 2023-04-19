@@ -1,12 +1,9 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, {useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Modal } from "antd";
 import { BsPencil, BsTrash } from "react-icons/bs";
 import {
-  getCurrentUser,
-  getAllUsers,
   deletePost,
-  getConnections,
 } from "../../../api/FirestoreAPI";
 import LikeButton from "../LikeButton";
 import "./index.scss";
@@ -14,22 +11,25 @@ import "./index.scss";
 export default function PostsCard({ posts, id, getEditData }) {
   let navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({});
-  const [allUsers, setAllUsers] = useState([]);
   const [imageModal, setImageModal] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
-  useMemo(() => {
-    getCurrentUser(setCurrentUser);
-    getAllUsers(setAllUsers);
+  async function funcsetCurrentUser() {
+    let loggedUser = window.localStorage.getItem("loggedAppUser");
+    if (loggedUser) {
+      const userStorage = JSON.parse(loggedUser);
+      setCurrentUser(userStorage)
+    } else {
+      navigate("/login");
+    }
+  }
+  useEffect(() => {
+    funcsetCurrentUser()
   }, []);
 
-  useEffect(() => {
-    getConnections(currentUser.id, posts.userID, setIsConnected);
-  }, [currentUser.id, posts.userID]);
-
-  return isConnected || currentUser.id === posts.userID ? (
+  return posts.User[0]._id ? (
     <div className="posts-card" key={id}>
       <div className="post-image-wrapper">
-        {currentUser.id === posts.userID ? (
+        {/* {currentUser.id === posts.User[0]._id ? (
           <div className="action-container">
             <BsPencil
               size={20}
@@ -44,16 +44,12 @@ export default function PostsCard({ posts, id, getEditData }) {
           </div>
         ) : (
           <></>
-        )}
+        )} */}
 
         <img
           alt="profile-image"
           className="profile-image"
-          src={
-            allUsers
-              .filter((item) => item.id === posts.userID)
-              .map((item) => item.imageLink)[0]
-          }
+          src={posts.User[0].avatar }
         />
         <div>
           <p
@@ -64,18 +60,18 @@ export default function PostsCard({ posts, id, getEditData }) {
               })
             }
           >
-            {allUsers.filter((user) => user.id === posts.userID)[0]?.name}
+            {posts.User[0].nameuser}
           </p>
           <p className="headline">
-            {allUsers.filter((user) => user.id === posts.userID)[0]?.headline}
+          {posts.User[0].nameuser}
           </p>
-          <p className="timestamp">{posts.timeStamp}</p>
+          <p className="timestamp">{posts.timestamp}</p>
         </div>
       </div>
-      {posts.PostImage ? (
+      {posts.postimage ? (
         <img
           onClick={() => setImageModal(true)}
-          src={posts.PostImage}
+          src={posts.postimage}
           className="post-image"
           alt="post-image"
         />
@@ -93,20 +89,20 @@ export default function PostsCard({ posts, id, getEditData }) {
         currentUser={currentUser}
       />
 
-      <Modal
+      {/* <Modal
         centered
         open={imageModal}
         onOk={() => setImageModal(false)}
         onCancel={() => setImageModal(false)}
         footer={[]}
-      >
-        <img
+      > */}
+        {/* <img
           onClick={() => setImageModal(true)}
           src={posts.postImage}
           className="post-image modal"
           alt="post-image"
-        />
-      </Modal>
+        /> */}
+      {/* </Modal> */}
     </div>
   ) : (
     <></>

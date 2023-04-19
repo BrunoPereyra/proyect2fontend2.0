@@ -10,7 +10,6 @@ import {
 } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { BsBriefcase } from "react-icons/bs";
-import { getAllUsers } from "../../../api/FirestoreAPI";
 import ProfilePopup from "../ProfilePopup";
 import "./index.scss";
 
@@ -39,18 +38,19 @@ export default function Topbar({ currentUser }) {
   };
 
   const handleSearch = () => {
-    if (searchInput !== "") {
-      let searched = users.filter((user) => {
-        return Object.values(user)
-          .join("")
-          .toLowerCase()
-          .includes(searchInput.toLowerCase());
-      });
+    console.log(searchInput);
+    // if (searchInput !== "") {
+    //   let searched = users.filter((user) => {
+    //     return Object.values(user)
+    //       .join("")
+    //       .toLowerCase()
+    //       .includes(searchInput.toLowerCase());
+    //   });
 
-      setFilteredUsers(searched);
-    } else {
-      setFilteredUsers(users);
-    }
+    //   setFilteredUsers(searched);
+    // } else {
+    //   setFilteredUsers(users);
+    // }
   };
 
   useEffect(() => {
@@ -61,10 +61,7 @@ export default function Topbar({ currentUser }) {
     return () => clearTimeout(debounced);
   }, [searchInput]);
 
-  useEffect(() => {
-    console.log(currentUser,"---");
-    getAllUsers(setUsers);
-  }, []);
+
   return (
     <div className="topbar-main">
       {popupVisible ? (
