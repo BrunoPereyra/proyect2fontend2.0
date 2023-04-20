@@ -12,14 +12,16 @@ import { useNavigate } from "react-router-dom";
 import { BsBriefcase } from "react-icons/bs";
 import ProfilePopup from "../ProfilePopup";
 import "./index.scss";
+import service from '../../../services/service'
 
 export default function Topbar({ currentUser }) {
   const [popupVisible, setPopupVisible] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
   const [users, setUsers] = useState([]);
-  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [UsersSearchTopbar, setUsersSearchTopbar] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   let navigate = useNavigate();
+
   const goToRoute = (route) => {
     navigate(route);
   };
@@ -31,26 +33,19 @@ export default function Topbar({ currentUser }) {
   const openUser = (user) => {
     navigate("/profile", {
       state: {
-        id: user.id,
+        id: user._id,
         email: user.email,
       },
     });
   };
 
-  const handleSearch = () => {
-    console.log(searchInput);
-    // if (searchInput !== "") {
-    //   let searched = users.filter((user) => {
-    //     return Object.values(user)
-    //       .join("")
-    //       .toLowerCase()
-    //       .includes(searchInput.toLowerCase());
-    //   });
-
-    //   setFilteredUsers(searched);
-    // } else {
-    //   setFilteredUsers(users);
-    // }
+  const handleSearch = async () => {
+    if (searchInput !== "") {
+      let searched = await service.searchuser(searchInput)
+      setUsersSearchTopbar(searched.data.data);
+    } else {
+      console.log("handleSearch cae el else");
+    }
   };
 
   useEffect(() => {
@@ -111,13 +106,13 @@ export default function Topbar({ currentUser }) {
         <></>
       ) : (
         <div className="search-results">
-          {filteredUsers.length === 0 ? (
+          {UsersSearchTopbar.length === 0 ? (
             <div className="search-inner">No Results Found..</div>
           ) : (
-            filteredUsers.map((user) => (
+            UsersSearchTopbar.map((user) => (
               <div className="search-inner" onClick={() => openUser(user)}>
-                <img src={user.imageLink} />
-                <p className="name">{user.name}</p>
+                <img src={user.avatar} />
+                <p className="name">{user.NameUser}</p>
               </div>
             ))
           )}

@@ -88,12 +88,27 @@ const GetPost = async (FormData) => {
     )
     return res
 }
+const searchuser = async (newObject) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    let nameuser = newObject
+    const res = await axios.post(
+        `${baseUrl}/Searchuser`,
+        nameuser,
+        config
+    )
+    return res
+}
 const exportedObject = {
     LoginUser,
     setToken,
     searchRefService,
     Currentuser,
     Postupload,
-    GetPost
+    GetPost,
+    searchuser
 }
 export default exportedObject

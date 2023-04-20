@@ -7,7 +7,7 @@ export default function SearchUsers({ setIsSearch, setSearchInput }) {
     <div className="search-users">
       <input
         placeholder="Search Users..."
-        onChange={(event) => setSearchInput(event.target.value)}
+        onChange={(event) => setSearchInput({nameuser:event.target.value})}
       />
 
       <AiOutlineCloseCircle
