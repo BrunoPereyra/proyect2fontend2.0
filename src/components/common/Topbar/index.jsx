@@ -17,7 +17,6 @@ import service from '../../../services/service'
 export default function Topbar({ currentUser }) {
   const [popupVisible, setPopupVisible] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
-  const [users, setUsers] = useState([]);
   const [UsersSearchTopbar, setUsersSearchTopbar] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   let navigate = useNavigate();

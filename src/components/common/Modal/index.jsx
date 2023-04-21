@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Modal } from "antd";
 import { AiOutlinePicture } from "react-icons/ai";
 import ReactQuill from "react-quill";
@@ -10,11 +10,8 @@ import service from '../../../services/service';
 const ModalComponent = ({
   modalOpen,
   setModalOpen,
-  sendStatus,
   setStatus,
   status,
-  isEdit,
-  updateStatus,
   setPostImage,
   postImage,
   currentPost,
@@ -27,9 +24,13 @@ const ModalComponent = ({
     formData.append("Status", status);
     formData.append("PostImage", postImage);
     try {
-      const res = await service.Postupload(formData)
-      console.log(res);
-
+      let loggedUser = window.localStorage.getItem("loggedAppUser");
+      if (loggedUser) {
+        const userStorage = JSON.parse(loggedUser);
+        service.setToken(userStorage.token);
+        await service.Postupload(formData)
+        setModalOpen(false)
+      }
     } catch (error) {
       console.log(error);
     }
@@ -54,12 +55,12 @@ const ModalComponent = ({
         }}
         footer={[
           <Button
-            onClick={isEdit ? updateStatus : Postupload}
+            onClick={Postupload}
             key="submit"
             type="primary"
             disabled={status.length > 0 ? false : true}
           >
-            {isEdit ? "Update" : "Post"}
+            {"Post"}
           </Button>,
         ]}
       >

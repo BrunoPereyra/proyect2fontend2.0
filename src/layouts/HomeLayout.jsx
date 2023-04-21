@@ -6,21 +6,29 @@ import service from '../services/service';
 export default function HomeLayout() {
   const [currentUser, setCurrentUser] = useState({});
 
-  async function funcsetCurrentUser() {
-    let loggedUser = window.localStorage.getItem("loggedAppUser");
-    if (loggedUser) {
-      const userStorage = JSON.parse(loggedUser);
-      service.setToken(userStorage.token);
-      const res = await service.Currentuser()
-      setCurrentUser(res.data.data)
-    } else {
-      navigate("/login");
-    }
-  }
 
   useEffect(() => {
+    async function funcsetCurrentUser() {
+      let cachedUser = window.localStorage.getItem("cachedAppUser");
+      if (cachedUser) {
+        setCurrentUser(JSON.parse(cachedUser));
+      } else {
+        let loggedUser = window.localStorage.getItem("loggedAppUser");
+        if (loggedUser) {
+          const userStorage = JSON.parse(loggedUser);
+          service.setToken(userStorage.token);
+          const res = await service.Currentuser()
+          setCurrentUser(res.data.data);
+          window.localStorage.setItem("cachedAppUser", JSON.stringify(res.data.data));
+        } else {
+          navigate("/login");
+        }
+      }
+    }
+  
     funcsetCurrentUser();
   }, []);
+  
 
   return (
     <div>
