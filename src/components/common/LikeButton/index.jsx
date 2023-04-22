@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from "react";
-// import {
-//   likePost,
-//   getLikesByUser,
-//   postComment,
-//   getComments,
-// } from "../../../api/FirestoreAPI";
-import { getCurrentTimeStamp } from "../../../helpers/useMoment";
 import "./index.scss";
 import { AiOutlineHeart, AiFillHeart, AiOutlineComment } from "react-icons/ai";
 import { BsFillHandThumbsUpFill, BsHandThumbsUp } from "react-icons/bs";
+import service from "../../../services/service";
 
-export default function LikeButton({ userId, postId, currentUser }) {
+export default function LikeButton({ postId, currentUser, Likes }) {
   const [likesCount, setLikesCount] = useState(0);
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [liked, setLiked] = useState(false);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
 
-  const handleLike = () => {
-    // likePost(userId, postId, liked);
+  const handleLike = async () => {
+    service.setToken(currentUser.token);
+    setLiked(!liked);
+    await service.LikePost({ id_post: postId });
   };
   const getComment = (event) => {
     setComment(event.target.value);
@@ -28,13 +24,25 @@ export default function LikeButton({ userId, postId, currentUser }) {
     // postComment(postId, comment, getCurrentTimeStamp("LLL"), currentUser?.name);
     setComment("");
   };
+
+  const checkifalreadyliked = () =>{
+    if (Likes.length !== 0) {
+      Likes.forEach((like) => {
+        if (like === currentUser.id) {
+          setLiked(true);
+        }
+      });
+    } else {
+      setLiked(false);
+    }
+  }
   useEffect(() => {
-    // getLikesByUser(userId, postId, setLiked, setLikesCount);
+    checkifalreadyliked()
     // getComments(postId, setComments);
-  }, [userId, postId]);
+  }, [currentUser]);
   return (
     <div className="like-container">
-      <p>{likesCount} People Like this Post</p>
+      <p>{Likes.length} People Like this Post</p>
       <div className="hr-line">
         <hr />
       </div>
@@ -85,7 +93,6 @@ export default function LikeButton({ userId, postId, currentUser }) {
                   <p className="timestamp">{comment.timeStamp}</p>
 
                   <p>•</p>
-
                 </div>
               );
             })

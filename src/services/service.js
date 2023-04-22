@@ -102,6 +102,15 @@ const searchuser = async (newObject) => {
     )
     return res
 }
+const LikePost = async (object) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const res = await axios.post(`${baseUrl}/likePost`, object, config)
+    return res
+}
 const exportedObject = {
     LoginUser,
     setToken,
@@ -109,6 +118,7 @@ const exportedObject = {
     Currentuser,
     Postupload,
     GetPost,
-    searchuser
+    searchuser,
+    LikePost
 }
 export default exportedObject

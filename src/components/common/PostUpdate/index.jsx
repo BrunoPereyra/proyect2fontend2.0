@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import ModalComponent from "../Modal";
 import PostsCard from "../PostsCard";
 import "./index.scss";
-import service from '../../../services/service'
+import service from "../../../services/service";
 
 export default function PostStatus({ currentUser }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -11,15 +11,13 @@ export default function PostStatus({ currentUser }) {
   const [currentPost, setCurrentPost] = useState({});
   const [postImage, setPostImage] = useState("");
 
-
-
   async function getPost() {
-    const res = await service.GetPost()
-    setPost(res.data.data)
+    const res = await service.GetPost();
+    setPost(res.data.data);
   }
   useEffect(() => {
-    getPost()
-  }, [])
+    getPost();
+  }, []);
 
   return (
     <div className="post-status-main">
@@ -29,11 +27,7 @@ export default function PostStatus({ currentUser }) {
         <p className="headline">{currentUser?.headline}</p>
       </div>
       <div className="post-status">
-        <img
-          className="post-image"
-          src={currentUser.avatar}
-          alt="imageLink"
-        />
+        <img className="post-image" src={currentUser.avatar} alt="imageLink" />
         <button
           className="open-post-modal"
           onClick={() => {
@@ -56,13 +50,19 @@ export default function PostStatus({ currentUser }) {
       />
 
       <div>
-        {Posts.map((posts) => {
-          return (
-            <div key={posts._id}>
-              <PostsCard posts={posts} />
-            </div>
-          );
-        })}
+        {Posts ? (
+          <div>
+            {Posts.map((posts) => {
+              return (
+                <div key={posts._id}>
+                  <PostsCard posts={posts} />
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

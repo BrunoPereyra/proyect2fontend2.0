@@ -63,11 +63,10 @@ export default function PostsCard({ posts, id }) {
       ></p>
 
       <LikeButton
-        userId={currentUser?.id}
         postId={posts._id}
         currentUser={currentUser}
+        Likes={posts.Likes}
       />
-
        <Modal
         centered
         open={imageModal}
