@@ -5,7 +5,6 @@ import { BsFillHandThumbsUpFill, BsHandThumbsUp } from "react-icons/bs";
 import service from "../../../services/service";
 
 export default function LikeButton({ postId, currentUser, Likes }) {
-  const [likesCount, setLikesCount] = useState(0);
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [liked, setLiked] = useState(false);
   const [comment, setComment] = useState("");
@@ -14,6 +13,7 @@ export default function LikeButton({ postId, currentUser, Likes }) {
   const handleLike = async () => {
     service.setToken(currentUser.token);
     setLiked(!liked);
+    console.log(postId);
     await service.LikePost({ id_post: postId });
   };
   const getComment = (event) => {
@@ -37,6 +37,7 @@ export default function LikeButton({ postId, currentUser, Likes }) {
     }
   }
   useEffect(() => {
+    console.log(Likes);
     checkifalreadyliked()
     // getComments(postId, setComments);
   }, [currentUser]);

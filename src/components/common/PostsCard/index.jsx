@@ -65,7 +65,7 @@ export default function PostsCard({ posts, id }) {
       <LikeButton
         postId={posts._id}
         currentUser={currentUser}
-        Likes={posts.Likes}
+        Likes={posts.Likes ?  posts.Likes : posts.Likes = []}
       />
        <Modal
         centered

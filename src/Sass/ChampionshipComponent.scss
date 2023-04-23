@@ -1,0 +1,46 @@
+.championship-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.user-details {
+  width: 550px;
+  height: auto;
+  background-color: whitesmoke;
+  margin-top: 100px;
+  border: 1px solid #b7b7b7;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-top: -60px;
+    border: 1px solid #b7b7b7;
+    padding: 1px;
+  }
+
+  .name {
+    font-weight: 600;
+    font-family: system-ui;
+  }
+
+  .headline {
+    font-family: system-ui;
+    margin-top: -15px;
+  }
+}
+
+.about-the-tournament {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 95%;
+}
