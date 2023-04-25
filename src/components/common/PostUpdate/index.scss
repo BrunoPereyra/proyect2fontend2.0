@@ -4,6 +4,7 @@
   align-items: center;
   flex-direction: column;
   position: relative;
+
   .user-details {
     width: 550px;
     height: auto;
@@ -14,6 +15,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
     img {
       width: 100px;
       height: 100px;
@@ -34,6 +36,7 @@
       margin-top: -15px;
     }
   }
+
   .post-status {
     width: 550px;
     height: 120px;
@@ -51,6 +54,7 @@
       object-fit: cover;
       border-radius: 50%;
     }
+
     .open-post-modal {
       width: 80%;
       height: 50px;
