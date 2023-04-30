@@ -1,5 +1,5 @@
 import axios from "axios"
-const baseUrl = 'http://localhost:3001'
+const baseUrl = 'https://proyect2-backend-production-1a5c.up.railway.app'
 var token = null
 
 const setToken = (newObject) => {
@@ -74,7 +74,6 @@ const Postupload = async (FormData) => {
     )
     return res
 }
-
 const GetPost = async (FormData) => {
     const config = {
         headers: {
@@ -111,6 +110,35 @@ const LikePost = async (object) => {
     const res = await axios.post(`${baseUrl}/likePost`, object, config)
     return res
 }
+const AskForChampionship = async (object) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const res = await axios.post(`${baseUrl}/AskForChampionship`, object, config)
+    return res
+}
+const ApplyChampionship = async (object) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const res = await axios.post(`${baseUrl}/ApplyChampionship`, object, config)
+    return res
+}
+const AcceptedApplicants = async (object) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const res = await axios.post(`${baseUrl}/AcceptedApplicants`, object, config)
+    return res
+}
+
+
 const exportedObject = {
     LoginUser,
     setToken,
@@ -119,6 +147,9 @@ const exportedObject = {
     Postupload,
     GetPost,
     searchuser,
-    LikePost
+    LikePost,
+    AskForChampionship,
+    ApplyChampionship,
+    AcceptedApplicants
 }
 export default exportedObject

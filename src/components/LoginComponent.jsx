@@ -4,8 +4,7 @@ import LinkedinLogo from "../assets/linkedinLogo.png";
 import { useNavigate } from "react-router-dom";
 import "../Sass/LoginComponent.scss";
 import { toast } from "react-toastify";
-import service from "../services/service"
-
+import service from "../services/service";
 
 export default function LoginComponent() {
   let navigate = useNavigate();
@@ -16,7 +15,7 @@ export default function LoginComponent() {
       console.log(res.data.token);
       if (res.data.token) {
         window.localStorage.setItem("loggedAppUser", JSON.stringify(res.data));
-        window.localStorage.removeItem("cachedAppUser")
+        window.localStorage.removeItem("cachedAppUser");
         service.setToken(res.token);
         toast.success("Signed In to Linkedin!");
         navigate("/home");

@@ -1,125 +1,75 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PostsCard from "./common/PostsCard/index";
+import service from "../services/service";
 
 import "../Sass/ChampionshipComponent.scss";
 
 export default function ChampionshipComponent({ currentUser }) {
-  const post = [
-    {
-      Likes: ["644540201ed524f31d5a45c7"],
-      User: [
-        {
-          _id: "644540201ed524f31d5a45c7",
-          avatar:
-            "https://res.cloudinary.com/depcty8j1/image/upload/v1682260000/lu4jc3bpehdn8bbgnvgm.jpg",
-          email: "bruaaaao@0023.com",
-          nameuser: "bruno",
-        },
-      ],
-      _id: "64454f1bfea17efff9c04a530",
-      postimage: "",
-      status: "<p>sasas</p>",
-      timestamp: "2023-04-23T12:30:35.267-03:00",
-    },
-    {
-      Likes: ["644540201ed524f31d5a45c7"],
-      User: [
-        {
-          _id: "644540201ed524f31d5a45c7",
-          avatar:
-            "https://res.cloudinary.com/depcty8j1/image/upload/v1682260000/lu4jc3bpehdn8bbgnvgm.jpg",
-          email: "bruaaaao@0023.com",
-          nameuser: "bruno",
-        },
-      ],
-      _id: "64454f1bfae1a7efff9c04a530",
-      postimage: "",
-      status: "<p>sasas</p>",
-      timestamp: "2023-04-23T12:30:35.267-03:00",
-    },
-    {
-      Likes: ["644540201ed524f31d5a45c7"],
-      User: [
-        {
-          _id: "644540201ed524f31d5a45c7",
-          avatar:
-            "https://res.cloudinary.com/depcty8j1/image/upload/v1682260000/lu4jc3bpehdn8bbgnvgm.jpg",
-          email: "bruaaaao@0023.com",
-          nameuser: "bruno",
-        },
-      ],
-      _id: "64454f1bfaeaa17efff9c04a530",
-      postimage: "",
-      status: "<p>sasas</p>",
-      timestamp: "2023-04-23T12:30:35.267-03:00",
-    },
-    {
-      Likes: ["644540201eds524f31d5a45c7"],
-      User: [
-        {
-          _id: "644540201ed524f31d5a45c7",
-          avatar:
-            "https://res.cloudinary.com/depcty8j1/image/upload/v1682260000/lu4jc3bpehdn8bbgnvgm.jpg",
-          email: "bruaaaao@0023.com",
-          nameuser: "bruno",
-        },
-      ],
-      _id: "64454f1bfaesaa17efff9c04a530",
-      postimage: "",
-      status: "<p>sasas</p>",
-      timestamp: "2023-04-23T12:30:35.267-03:00",
-    },
-    {
-      Likes: ["64454s0201ed524f31d5a45c7"],
-      User: [
-        {
-          _id: "6445402s01ed524f31d5a45c7",
-          avatar:
-            "https://res.cloudinary.com/depcty8j1/image/upload/v1682260000/lu4jc3bpehdn8bbgnvgm.jpg",
-          email: "bruaaaao@0023.com",
-          nameuser: "bruno",
-        },
-      ],
-      _id: "64454f1bsfaeaa17efff9c04a530",
-      postimage: "",
-      status: "<p>sasas</p>",
-      timestamp: "2023-04-23T12:30:35.267-03:00",
-    },
-    {
-      Likes: ["64454s0201ed524f31d5a45c7"],
-      User: [
-        {
-          _id: "6445402s01ed524f31d5a45c7",
-          avatar:
-            "https://res.cloudinary.com/depcty8j1/image/upload/v1682260000/lu4jc3bpehdn8bbgnvgm.jpg",
-          email: "bruaaaao@0023.com",
-          nameuser: "bruno",
-        },
-      ],
-      _id: "64454f1bsfaeaa17efff9c04a530",
-      postimage: "",
-      status: "<p>sasas</p>",
-      timestamp: "2023-04-23T12:30:35.267-03:00",
-    },
-  ];
+  const [Championship, setChampionship] = useState({});
+  const [loggedUser, setloggedUser] = useState({});
+  const [AcceptedApplicants, setAcceptedApplicants] = useState("");
+
+  async function getChampionship() {
+    const res = await service.AskForChampionship({
+      IDchampionship: "644a6d0441ada3ac56ff632e",
+    });
+    setChampionship(res.data.data);
+  }
+  async function applicantsChampionship() {
+    service.setToken(loggedUser.token);
+    const res = await service.ApplyChampionship({
+      Championship_id: "644a6d0441ada3ac56ff632e",
+    });
+    console.log(res);
+  }
+  async function AcceptedApplicant() {
+    service.setToken(loggedUser.token);
+    const res = await service.AcceptedApplicants({
+      user_id: AcceptedApplicants,
+      Championship_id: "644a6d0441ada3ac56ff632e",
+    });
+    console.log(res);
+  }
+  useEffect(() => {
+    getChampionship();
+    setloggedUser(JSON.parse(window.localStorage.getItem("loggedAppUser")));
+  }, []);
+
   return (
     <div className="championship-component">
       <div className="user-details">
         <img src={currentUser.avatar} alt="imageLink" />
-        <p className="name">{currentUser.NameUser}</p>
-        <p className="headline">{currentUser?.headline}</p>
+        <p className="name">{Championship.name}</p>
+        {Championship.creator == currentUser.id ? (
+          <div>
+            <p className="headline">agregar participante</p>
+            <input
+              type="text"
+              onChange={(event) => setAcceptedApplicants(event.target.value)}
+            />
+            <button onClick={() => AcceptedApplicant()}>a</button>
+          </div>
+        ) : (
+          <p
+            className="championship-participar"
+            onClick={() => applicantsChampionship()}
+          >
+            aplicar al torneo
+          </p>
+        )}
         <div className="about-the-tournament">
           <p>premio</p>
           <p>cantidad de votos</p>
           <p>cantidad de votos</p>
         </div>
       </div>
-      {post.map((p) => {
+      {console.log(Championship)}
+      {/* {post.map((p) => {
         return <PostsCard posts={p} />;
-      })}
+      })} */}
       <div className="championship-vote-poll">
-        <div className="championship-vote-poll-unfolded">
-          {post.map((p) => {
+        {/* <div className="championship-vote-poll-unfolded">
+          {Championship.map((p) => {
             return (
               <div className="championship-vote-poll-unfolded-user">
                 <img src={p.User[0].avatar} width={70} alt="" />
@@ -127,7 +77,7 @@ export default function ChampionshipComponent({ currentUser }) {
               </div>
             );
           })}
-        </div>
+        </div> */}
         <div>
           <span>confirmar voto</span>
           <span>^</span>

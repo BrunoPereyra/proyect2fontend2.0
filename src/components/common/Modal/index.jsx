@@ -3,9 +3,7 @@ import { Button, Modal } from "antd";
 import { AiOutlinePicture } from "react-icons/ai";
 import ReactQuill from "react-quill";
 import "./index.scss";
-import service from '../../../services/service';
-
-
+import service from "../../../services/service";
 
 const ModalComponent = ({
   modalOpen,
@@ -18,9 +16,7 @@ const ModalComponent = ({
   setCurrentPost,
 }) => {
   async function Postupload() {
-    console.log(status, postImage);
     const formData = new FormData();
-
     formData.append("Status", status);
     formData.append("PostImage", postImage);
     try {
@@ -28,8 +24,12 @@ const ModalComponent = ({
       if (loggedUser) {
         const userStorage = JSON.parse(loggedUser);
         service.setToken(userStorage.token);
-        await service.Postupload(formData)
-        setModalOpen(false)
+        var inicio = performance.now();
+        await service.Postupload(formData);
+        var fin = performance.now();
+        var tiempoTranscurrido = fin - inicio;
+        console.log(tiempoTranscurrido);
+        setModalOpen(false);
       }
     } catch (error) {
       console.log(error);
