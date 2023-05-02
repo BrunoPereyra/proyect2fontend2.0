@@ -9,7 +9,8 @@ export default function ChampionshipComponent({ currentUser }) {
   const [loggedUser, setloggedUser] = useState({});
   const [AcceptedApplicants, setAcceptedApplicants] = useState("");
 
-  async function getChampionship() {
+  async function getChampionship(token) {
+    service.setToken(token);
     const res = await service.AskForChampionship({
       IDchampionship: "644a6d0441ada3ac56ff632e",
     });
@@ -31,8 +32,14 @@ export default function ChampionshipComponent({ currentUser }) {
     console.log(res);
   }
   useEffect(() => {
-    getChampionship();
-    setloggedUser(JSON.parse(window.localStorage.getItem("loggedAppUser")));
+    const setloggedUserparse = JSON.parse(
+      window.localStorage.getItem("loggedAppUser")
+    );
+    if (setloggedUserparse && setloggedUserparse.token) {
+      setloggedUser(setloggedUserparse);
+      console.log(setloggedUserparse.token);
+      getChampionship(setloggedUserparse.token);
+    }
   }, []);
 
   return (
