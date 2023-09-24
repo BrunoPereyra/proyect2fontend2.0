@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import Login from "../Pages/Login";
+import Match from "../layouts/Match";
 import Register from "../Pages/Register";
 import HomeLayout from "../layouts/HomeLayout";
 import ProfileLayout from "../layouts/ProfileLayout";
 import ConnectionLayout from "../layouts/ConnectionLayout";
 import ChampionshipLayout from "../layouts/ChampionshipLayout";
-
 
 export const router = createBrowserRouter([
   {
@@ -31,5 +31,9 @@ export const router = createBrowserRouter([
   {
     path: "/championship",
     element: <ChampionshipLayout />,
+  },
+  {
+    path: "/match",
+    element: <Match />,
   },
 ]);

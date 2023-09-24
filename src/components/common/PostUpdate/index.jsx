@@ -4,7 +4,7 @@ import PostsCard from "../PostsCard";
 import "./index.scss";
 import service from "../../../services/service";
 
-export default function PostStatus({ currentUser }) {
+export default function PostStatus() {
   const [modalOpen, setModalOpen] = useState(false);
   const [status, setStatus] = useState("");
   const [Posts, setPost] = useState([]);
@@ -12,8 +12,15 @@ export default function PostStatus({ currentUser }) {
   const [postImage, setPostImage] = useState("");
 
   async function getPost() {
-    const res = await service.GetPost();
-    setPost(res.data.data);
+    let loggedUser = window.localStorage.getItem("loggedAppUser");
+    if (loggedUser) {
+      service.setToken(loggedUser);
+    } else {
+      navigate("/login");
+    }
+    const res = await service.PostGetFollow();
+    console.log(res.data.message);
+    setPost(res.data.message);
   }
   useEffect(() => {
     getPost();
@@ -22,12 +29,19 @@ export default function PostStatus({ currentUser }) {
   return (
     <div className="post-status-main">
       <div className="user-details">
-        <img src={currentUser.avatar} alt="imageLink" />
-        <p className="name">{currentUser.NameUser}</p>
-        <p className="headline">{currentUser?.headline}</p>
+        <img
+          src="https://img.freepik.com/vector-premium/linda-imagen-vectorial-dibujos-animados-estrellas-brillantes-amarillas_423491-67.jpg?w=740"
+          alt="imageLink"
+        />
+        <p className="name">NombreDeUsuario</p>
+        <p className="headline">headline</p>
       </div>
       <div className="post-status">
-        <img className="post-image" src={currentUser.avatar} alt="imageLink" />
+        <img
+          className="post-image"
+          src="https://img.freepik.com/vector-premium/linda-imagen-vectorial-dibujos-animados-estrellas-brillantes-amarillas_423491-67.jpg?w=740"
+          alt="imageLink"
+        />
         <button
           className="open-post-modal"
           onClick={() => {

@@ -12,9 +12,10 @@ export default function LoginComponent() {
   const login = async () => {
     try {
       var res = await service.LoginUser(credentails);
-      console.log(res.data.token);
-      if (res.data.token) {
-        window.localStorage.setItem("loggedAppUser", JSON.stringify(res.data));
+      console.log(res.data.data);
+      if (res.data.data) {
+        window.localStorage.setItem("loggedAppUser", res.data.data);
+        window.localStorage.setItem("_id", res.data._id);
         window.localStorage.removeItem("cachedAppUser");
         service.setToken(res.token);
         toast.success("Signed In to Linkedin!");

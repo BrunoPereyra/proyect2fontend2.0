@@ -3,15 +3,11 @@ import HomeComponent from "../components/HomeComponent";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/common/Loader";
 
-export default function Home({ currentUser }) {
+export default function Home() {
   const [loading, setLoading] = useState(true);
   let navigate = useNavigate();
   useEffect(() => {
-      if (currentUser.avatar) {
-        navigate("/");
-      } else {
-        setLoading(false);
-      }
+    setLoading(false);
   }, []);
-  return loading ? <Loader /> : <HomeComponent currentUser={currentUser} />;
+  return loading ? <Loader /> : <HomeComponent />;
 }

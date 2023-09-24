@@ -11,21 +11,28 @@ export default function LikeButton({ postId, currentUser, Likes }) {
   const [comments, setComments] = useState([]);
 
   const handleLike = async () => {
-    service.setToken(currentUser.token);
-    setLiked(!liked);
-    console.log(postId);
-    await service.LikePost({ id_post: postId });
+    let loggedUser = window.localStorage.getItem("loggedAppUser");
+    service.setToken(loggedUser);
+    if (liked) {
+      setLiked(false);
+      await service.DislikePost({ idPost: postId });
+    } else {
+      setLiked(true);
+      await service.LikePost({ idPost: postId });
+    }
   };
   const getComment = (event) => {
     setComment(event.target.value);
   };
 
-  const addComment = () => {
-    // postComment(postId, comment, getCurrentTimeStamp("LLL"), currentUser?.name);
+  const addComment = async () => {
+    let loggedUser = window.localStorage.getItem("loggedAppUser");
+    service.setToken(loggedUser);
+    await service.CommentPost({ status: comment, OriginalPost: postId });
     setComment("");
   };
 
-  const checkifalreadyliked = () =>{
+  const checkifalreadyliked = () => {
     if (Likes.length !== 0) {
       Likes.forEach((like) => {
         if (like === currentUser.id) {
@@ -35,10 +42,9 @@ export default function LikeButton({ postId, currentUser, Likes }) {
     } else {
       setLiked(false);
     }
-  }
+  };
   useEffect(() => {
-    console.log(Likes);
-    checkifalreadyliked()
+    checkifalreadyliked();
     // getComments(postId, setComments);
   }, [currentUser]);
   return (

@@ -16,13 +16,8 @@ export default function ChampionshipLayout() {
         let loggedUser = window.localStorage.getItem("loggedAppUser");
         if (loggedUser) {
           const userStorage = JSON.parse(loggedUser);
+          console.log(loggedUser);
           service.setToken(userStorage.token);
-          const res = await service.Currentuser();
-          setCurrentUser(res.data.data);
-          window.localStorage.setItem(
-            "cachedAppUser",
-            JSON.stringify(res.data.data)
-          );
         } else {
           navigate("/login");
         }

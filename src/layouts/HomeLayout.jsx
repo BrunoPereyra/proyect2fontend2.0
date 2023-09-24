@@ -4,27 +4,14 @@ import Topbar from "../components/common/Topbar";
 import service from "../services/service";
 
 export default function HomeLayout() {
-  const [currentUser, setCurrentUser] = useState({});
-
   useEffect(() => {
     async function funcsetCurrentUser() {
-      let cachedUser = window.localStorage.getItem("cachedAppUser");
-      if (cachedUser) {
-        setCurrentUser(JSON.parse(cachedUser));
+      let loggedUser = window.localStorage.getItem("loggedAppUser");
+      if (loggedUser) {
+        const userStorage = loggedUser;
+        service.setToken(userStorage.token);
       } else {
-        let loggedUser = window.localStorage.getItem("loggedAppUser");
-        if (loggedUser) {
-          const userStorage = JSON.parse(loggedUser);
-          service.setToken(userStorage.token);
-          const res = await service.Currentuser();
-          setCurrentUser(res.data.data);
-          window.localStorage.setItem(
-            "cachedAppUser",
-            JSON.stringify(res.data.data)
-          );
-        } else {
-          navigate("/login");
-        }
+        navigate("/login");
       }
     }
 
@@ -33,8 +20,8 @@ export default function HomeLayout() {
 
   return (
     <div>
-      <Topbar currentUser={currentUser} />
-      <Home currentUser={currentUser} />
+      <Topbar />
+      <Home />
     </div>
   );
 }

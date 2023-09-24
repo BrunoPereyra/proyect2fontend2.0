@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "antd";
 import LikeButton from "../LikeButton";
@@ -12,45 +12,41 @@ export default function PostsCard({ posts, id }) {
   async function funcsetCurrentUser() {
     let loggedUser = window.localStorage.getItem("loggedAppUser");
     if (loggedUser) {
-      const userStorage = JSON.parse(loggedUser);
-      setCurrentUser(userStorage)
     } else {
       navigate("/login");
     }
   }
   useEffect(() => {
-    funcsetCurrentUser()
+    funcsetCurrentUser();
   }, []);
 
-  return posts.User[0]._id ? (
-    <div className="posts-card" key={id}>
+  return posts?._id ? (
+    <div className="posts-card" key={posts?._id}>
       <div className="post-image-wrapper">
         <img
           alt="profile-image"
           className="profile-image"
-          src={posts.User[0].avatar }
+          src={posts.UserInfo.Avatar}
         />
         <div>
           <p
             className="name"
             onClick={() =>
               navigate("/profile", {
-                state: { id: posts?.userID, email: posts.userEmail },
+                state: { id: posts.UserInfo.NameUser, email: posts.userEmail },
               })
             }
           >
-            {posts.User[0].nameuser}
+            {posts.UserInfo.NameUser}
           </p>
-          <p className="headline">
-          {posts.User[0].nameuser}
-          </p>
-          <p className="timestamp">{posts.timestamp}</p>
+          <p className="headline">{posts.UserInfo.NameUser}</p>
+          <p className="timestamp">{posts.TimeStamp}</p>
         </div>
       </div>
-      {posts.postimage ? (
+      {posts.PostImage != "" ? (
         <img
           onClick={() => setImageModal(true)}
-          src={posts.postimage}
+          src={posts.PostImage}
           className="post-image"
           alt="post-image"
         />
@@ -59,27 +55,27 @@ export default function PostsCard({ posts, id }) {
       )}
       <p
         className="status"
-        dangerouslySetInnerHTML={{ __html: posts.status }}
+        dangerouslySetInnerHTML={{ __html: posts.Status }}
       ></p>
 
       <LikeButton
         postId={posts._id}
         currentUser={currentUser}
-        Likes={posts.Likes ?  posts.Likes : posts.Likes = []}
+        Likes={posts.Likes ? posts.Likes : (posts.Likes = [])}
       />
-       <Modal
+      <Modal
         centered
         open={imageModal}
         onOk={() => setImageModal(false)}
         onCancel={() => setImageModal(false)}
         footer={[]}
-      > 
+      >
         <img
           onClick={() => setImageModal(true)}
           src={posts.postimage}
           className="post-image modal"
           alt="post-image"
-        /> 
+        />
       </Modal>
     </div>
   ) : (

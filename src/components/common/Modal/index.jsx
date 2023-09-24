@@ -18,17 +18,13 @@ const ModalComponent = ({
   async function Postupload() {
     const formData = new FormData();
     formData.append("Status", status);
-    formData.append("PostImage", postImage);
+    formData.append("imgPost", postImage);
     try {
       let loggedUser = window.localStorage.getItem("loggedAppUser");
       if (loggedUser) {
-        const userStorage = JSON.parse(loggedUser);
-        service.setToken(userStorage.token);
-        var inicio = performance.now();
-        await service.Postupload(formData);
-        var fin = performance.now();
-        var tiempoTranscurrido = fin - inicio;
-        console.log(tiempoTranscurrido);
+        service.setToken(loggedUser);
+        const res = await service.PostCreate(formData);
+        console.log(res);
         setModalOpen(false);
       }
     } catch (error) {

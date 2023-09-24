@@ -1,15 +1,14 @@
 import axios from "axios"
-const baseUrl = 'https://proyect2-backend-production-1a5c.up.railway.app'
+const baseUrl = 'http://localhost:8080'
 var token = null
 
 const setToken = (newObject) => {
     token = newObject
 }
 const createUser = async (formData) => {
-
     const config = {
         headers: {
-            // "Authorization": `bearer ${token}`,
+            "Authorization": `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDhmYmJhYjMzMDA3N2ViNWNlNjUxN2UiLCJleHAiOjE2ODkwMTQ1NTIsIm5hbWV1c2VyIjoiYnJ1bm8ifQ.tgbnctMAmgYMWDzZyLyRG7NVecwXPfJ09iK-b0CTL0A`,
             "Content-Type": 'multipart/form-data'
         }
     }
@@ -26,7 +25,7 @@ const LoginUser = async (newObject) => {
             Authorization: `Bearer ${token}`
         }
     }
-    const res = await axios.post(`${baseUrl}/login`, newObject, config)
+    const res = await axios.post(`${baseUrl}/user/login`, newObject, config)
     return res
 }
 const searchRefService = async (newObject) => {
@@ -46,43 +45,30 @@ const searchRefService = async (newObject) => {
     )
     return res
 }
-const Currentuser = async (newObject) => {
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
 
-    const res = await axios.get(
-        `${baseUrl}/currentuser`,
-        config
-    )
-    return res
-}
-const Postupload = async (FormData) => {
+const PostCreate = async (FormData) => {
     const config = {
         headers: {
             "Authorization": `Bearer ${token}`,
             "Content-Type": 'multipart/form-data'
         }
     }
-
+    console.log(token);
     const res = await axios.post(
-        `${baseUrl}/UploadPost`,
+        `${baseUrl}/post/postCreate`,
         FormData,
         config
     )
     return res
 }
-const GetPost = async (FormData) => {
+const PostGetFollow = async (FormData) => {
     const config = {
         headers: {
             "Authorization": `Bearer ${token}`,
         }
     }
-
     const res = await axios.get(
-        `${baseUrl}/getPost`,
+        `${baseUrl}/post/postGetFollow`,
         config
     )
     return res
@@ -104,10 +90,31 @@ const searchuser = async (newObject) => {
 const LikePost = async (object) => {
     const config = {
         headers: {
+            "Authorization": `Bearer ${token}`,
+        }
+    }
+    console.log(token);
+    console.log(object.idTweet);
+    const res = await axios.post(`${baseUrl}/post/posttLike`, object, config)
+    console.log(res);
+    return res
+}
+const DislikePost = async (object) => {
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token}`,
+        }
+    }
+    const res = await axios.post(`${baseUrl}/post/postDislike`, object, config)
+    return res
+}
+const CommentPost = async (object) => {
+    const config = {
+        headers: {
             Authorization: `Bearer ${token}`
         }
     }
-    const res = await axios.post(`${baseUrl}/likePost`, object, config)
+    const res = await axios.post(`${baseUrl}/post/CommentPost`, object, config)
     return res
 }
 const AskForChampionship = async (object) => {
@@ -137,17 +144,59 @@ const AcceptedApplicants = async (object) => {
     const res = await axios.post(`${baseUrl}/AcceptedApplicants`, object, config)
     return res
 }
-
-
+const MatchUser = async () => {
+    let req = {
+        Pais: "ARG",
+        Ciudad: "CBA",
+        birthDate: "",
+        // sex: "mujer",
+        situation: "",
+        Instruments: {
+            "piano": 2,
+            "guitarra": 2
+        },
+        Genders: ["ROCK"],
+        Experience: 0,
+        ZodiacSign: "leo",
+        PageSize: 10
+    }
+    const res = await axios.post(
+        `${baseUrl}/user/MatchWithUsers`, req
+    )
+    return res
+}
+const follow = async (object) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const res = await axios.post(`${baseUrl}/user/follow`, object, config)
+    return res
+}
+const Unfollow = async (object) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const res = await axios.post(`${baseUrl}/user/Unfollow`, object, config)
+    return res
+}
 const exportedObject = {
+    follow,
+    Unfollow,
+    CommentPost,
+    MatchUser,
+    PostGetFollow,
     LoginUser,
     setToken,
     searchRefService,
-    Currentuser,
-    Postupload,
-    GetPost,
+    PostCreate,
+    // GetPost,
     searchuser,
     LikePost,
+    DislikePost,
     AskForChampionship,
     ApplyChampionship,
     AcceptedApplicants

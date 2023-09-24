@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { BsBriefcase } from "react-icons/bs";
 import ProfilePopup from "../ProfilePopup";
 import "./index.scss";
-import service from '../../../services/service'
+import service from "../../../services/service";
 
 export default function Topbar({ currentUser }) {
   const [popupVisible, setPopupVisible] = useState(false);
@@ -40,7 +40,7 @@ export default function Topbar({ currentUser }) {
 
   const handleSearch = async () => {
     if (searchInput !== "") {
-      let searched = await service.searchuser(searchInput)
+      let searched = await service.searchuser(searchInput);
       setUsersSearchTopbar(searched.data.data);
     } else {
       console.log("handleSearch cae el else");
@@ -54,7 +54,6 @@ export default function Topbar({ currentUser }) {
 
     return () => clearTimeout(debounced);
   }, [searchInput]);
-
 
   return (
     <div className="topbar-main">
@@ -96,7 +95,7 @@ export default function Topbar({ currentUser }) {
       )}
       <img
         className="user-logo"
-        src={currentUser.avatar}
+        src="https://img.freepik.com/vector-premium/linda-imagen-vectorial-dibujos-animados-estrellas-brillantes-amarillas_423491-67.jpg?w=740"
         alt="user"
         onClick={displayPopup}
       />

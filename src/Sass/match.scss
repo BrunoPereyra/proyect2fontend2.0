@@ -1,0 +1,102 @@
+.user-profile {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.profile-info {
+    flex-grow: 1;
+}
+
+h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.user-stats {
+    display: flex;
+    margin-top: 10px;
+}
+
+.user-stats p {
+    margin-right: 20px;
+    font-size: 14px;
+}
+
+.bio {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.user-profile {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Añadido para separar los botones */
+    margin-bottom: 20px;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.profile-info {
+    flex-grow: 1;
+}
+
+h1 {
+    font-size: 24px;
+    margin: 0;
+    display: inline-block;
+    /* Para que los botones estén en línea con el nombre */
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+}
+
+.follow-button,
+.unfollow-button,
+.message-button {
+    background-color: #0095f6;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4px;
+    outline: none;
+    margin-left: 10px;
+    /* Espacio entre los botones */
+}
+
+.unfollow-button {
+    background-color: #ffffff;
+    color: #0095f6;
+    border: 1px solid #0095f6;
+}
