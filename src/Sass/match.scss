@@ -100,3 +100,91 @@ h1 {
     color: #0095f6;
     border: 1px solid #0095f6;
 }
+
+/* Estilos para el botón de filtros */
+.filter-button {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.filter-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.filter-popup {
+    position: fixed;
+    top: 6%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    width: 90%;
+    transition: opacity 0.3s, transform 0.3s;
+    opacity: 1;
+    transform: scale(0.8);
+}
+
+.filter-popup.active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+/* Estilos para los selects */
+.select-box {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Estilos para los botones dentro de la ventana emergente */
+.apply-button,
+.close-button {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.close-button:last-child {
+    margin-right: 0;
+}
+
+.no-users-message {
+    margin: 20px 0;
+    color: red;
+    font-weight: bold;
+}
+
+.next-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.next-button:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,51 @@
+.MessagesChat {
+    display: flex;
+}
+
+.imgs {
+    display: flex;
+    height: 30px;
+    width: 30px;
+}
+
+.sas {
+    display: flex;
+    width: 22px;
+    align-items: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#Chats_section {
+    // display: flex;
+    background-color: black;
+
+}
+
+.Chats_section_ChatsTheUser {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.Conversation {
+    width: 100%;
+    max-height: 20%;
+    z-index: 1000;
+}
+
+.ChatApp {
+    width: 200px;
+    height: 200px;
+}
+
+.ChatComunidad {
+    // width: 20px;
+}
+
+.MessageForm {}

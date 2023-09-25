@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Login from "../Pages/Login";
 import Match from "../layouts/Match";
+import Chats from "../layouts/Chats";
 import Register from "../Pages/Register";
 import HomeLayout from "../layouts/HomeLayout";
 import ProfileLayout from "../layouts/ProfileLayout";
@@ -35,5 +36,9 @@ export const router = createBrowserRouter([
   {
     path: "/match",
     element: <Match />,
+  },
+  {
+    path: "/Chats",
+    element: <Chats />,
   },
 ]);

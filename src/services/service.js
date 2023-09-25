@@ -5,6 +5,19 @@ var token = null
 const setToken = (newObject) => {
     token = newObject
 }
+const SendMessageChat = async ({ message, chatId }) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const res = await axios.post(
+        `${baseUrl}chatStreaming/${chatId}`,
+        { message },
+        config
+    );
+    return res
+}
 const createUser = async (formData) => {
     const config = {
         headers: {
@@ -144,25 +157,12 @@ const AcceptedApplicants = async (object) => {
     const res = await axios.post(`${baseUrl}/AcceptedApplicants`, object, config)
     return res
 }
-const MatchUser = async () => {
-    let req = {
-        Pais: "ARG",
-        Ciudad: "CBA",
-        birthDate: "",
-        // sex: "mujer",
-        situation: "",
-        Instruments: {
-            "piano": 2,
-            "guitarra": 2
-        },
-        Genders: ["ROCK"],
-        Experience: 0,
-        ZodiacSign: "leo",
-        PageSize: 10
-    }
+const MatchUser = async (filters) => {
+    console.log(filters);
     const res = await axios.post(
-        `${baseUrl}/user/MatchWithUsers`, req
+        `${baseUrl}/user/MatchWithUsers`, filters
     )
+
     return res
 }
 const follow = async (object) => {
@@ -199,6 +199,7 @@ const exportedObject = {
     DislikePost,
     AskForChampionship,
     ApplyChampionship,
-    AcceptedApplicants
+    AcceptedApplicants,
+    SendMessageChat
 }
 export default exportedObject

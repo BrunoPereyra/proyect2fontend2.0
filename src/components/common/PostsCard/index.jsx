@@ -43,6 +43,12 @@ export default function PostsCard({ posts, id }) {
           <p className="timestamp">{posts.TimeStamp}</p>
         </div>
       </div>
+      <p
+        className="status"
+        // dangerouslySetInnerHTML={{ __html: posts.Status }}
+      >
+        {posts.Status}
+      </p>
       {posts.PostImage != "" ? (
         <img
           onClick={() => setImageModal(true)}
@@ -53,30 +59,12 @@ export default function PostsCard({ posts, id }) {
       ) : (
         <></>
       )}
-      <p
-        className="status"
-        dangerouslySetInnerHTML={{ __html: posts.Status }}
-      ></p>
 
       <LikeButton
         postId={posts._id}
         currentUser={currentUser}
         Likes={posts.Likes ? posts.Likes : (posts.Likes = [])}
       />
-      <Modal
-        centered
-        open={imageModal}
-        onOk={() => setImageModal(false)}
-        onCancel={() => setImageModal(false)}
-        footer={[]}
-      >
-        <img
-          onClick={() => setImageModal(true)}
-          src={posts.postimage}
-          className="post-image modal"
-          alt="post-image"
-        />
-      </Modal>
     </div>
   ) : (
     <></>
