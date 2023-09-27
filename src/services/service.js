@@ -183,7 +183,36 @@ const Unfollow = async (object) => {
     const res = await axios.post(`${baseUrl}/user/Unfollow`, object, config)
     return res
 }
+const GoogleLoginURL = async () => {
+    const res = await axios.get(
+        `${baseUrl}/user/google_login`, {}
+    )
+    console.log(res);
+
+    return res
+}
+const Google_callback = async (code) => {
+    const res = await axios.get(
+        `${baseUrl}/user/google_callback?code=${code}`
+    );
+
+    return res;
+};
+const Google_callback_Complete_Profile_And_Username = async (data) => {
+    const res = await axios.post(
+        `${baseUrl}/user/Google_callback_Complete_Profile_And_Username`,
+        data,
+        {
+
+        }
+    );
+
+    return res;
+};
 const exportedObject = {
+    Google_callback_Complete_Profile_And_Username,
+    Google_callback,
+    GoogleLoginURL,
     follow,
     Unfollow,
     CommentPost,
