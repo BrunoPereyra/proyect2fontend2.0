@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Topbar from "../components/common/Topbar";
 import Profile from "../components/Profile";
 import service from "../services/service";
-import "../Sass/match.scss"; // Asegúrate de que la ruta del archivo SCSS sea correcta
+import "../Sass/match.scss";
 
 export default function Match() {
   const [currentUser, setCurrentUser] = useState({});
@@ -10,21 +10,21 @@ export default function Match() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentUserId, setCurrentUserId] = useState(null);
 
-  // Estados para almacenar los filtros seleccionados por el usuario
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedSex, setSelectedSex] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [selectedBirthDate, setSelectedBirthDate] = useState("");
   const [selectedSituation, setSelectedSituation] = useState("");
-  const [selectedInstruments, setSelectedInstruments] = useState({
-    piano: 0,
-    guitarra: 0,
-  });
+
   const [selectedGenders, setSelectedGenders] = useState([]);
   const [selectedExperience, setSelectedExperience] = useState(0);
   const [selectedZodiacSign, setSelectedZodiacSign] = useState("");
 
+  const [selectedInstruments, setSelectedInstruments] = useState({});
+  const instrumentOptions = ["Guitarra", "Piano", "Batería", "Bajo", "Otro"];
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const genreOptions = ["Rock", "Trap", "Rap", "Pop", "Electrónica", "Otros"];
   async function funcsetCurrentUser() {
     let loggedUser = window.localStorage.getItem("loggedAppUser");
     let id = window.localStorage.getItem("_id");
@@ -55,16 +55,26 @@ export default function Match() {
       sex: selectedSex,
       birthDate: selectedBirthDate,
       situation: selectedSituation,
-      Instruments: instruments,
-      Genders: selectedGenders,
+      Instruments: selectedInstruments,
+      Genders: selectedGenres,
       Experience: selectedExperience,
       ZodiacSign: selectedZodiacSign,
       PageSize: 10,
     };
 
-    const filteredUsers = await service.MatchUser(filters);
-    setUserList(filteredUsers.data.data);
-    setCurrentIndex(0);
+    try {
+      const filteredUsers = await service.MatchUser(filters);
+
+      if (!filteredUsers.data.data) {
+        setUserList([]);
+        setCurrentIndex(0);
+      } else {
+        setUserList(filteredUsers.data.data);
+        setCurrentIndex(0);
+      }
+    } catch (error) {
+      console.error("Error al aplicar filtros:", error);
+    }
   };
 
   const showNextProfile = () => {
@@ -73,27 +83,14 @@ export default function Match() {
 
   useEffect(() => {
     funcsetCurrentUser();
+    applyFilters(); // Cargar usuarios con valores por defecto al entrar a la página
   }, []);
-
-  useEffect(() => {
-    applyFilters();
-  }, [
-    selectedCountry,
-    selectedCity,
-    selectedSex,
-    selectedBirthDate,
-    selectedSituation,
-    selectedInstruments,
-    selectedGenders,
-    selectedExperience,
-    selectedZodiacSign,
-  ]); // Agregar las dependencias de los efectos
 
   // Función para mostrar la ventana emergente de filtros
   const openFilters = () => {
-    console.log("isiai");
     setShowFilters(true);
   };
+
   // Función para ocultar la ventana emergente de filtros
   const closeFilters = () => {
     setShowFilters(false);
@@ -110,97 +107,58 @@ export default function Match() {
       {showFilters && (
         <div className="filter-popup">
           <form>
-            <select
-              value={selectedCountry}
-              onChange={(e) => setSelectedCountry(e.target.value)}
-              className="select-box"
-            >
-              <option value="">Cualquier País</option>
-              <option value="ARG">Argentina</option>
-              {/* Agregar más opciones si es necesario */}
-            </select>
-            <select
-              value={selectedCity}
-              onChange={(e) => setSelectedCity(e.target.value)}
-              className="select-box"
-            >
-              <option value="">Cualquier Ciudad</option>
-              <option value="CBA">Córdoba</option>
-              {/* Agregar más opciones si es necesario */}
-            </select>
-            <select
-              value={selectedSex}
-              onChange={(e) => setSelectedSex(e.target.value)}
-              className="select-box"
-            >
-              <option value="">Cualquier Sexo</option>
-              <option value="mujer">Mujer</option>
-              <option value="hombre">Hombre</option>
-              {/* Agregar más opciones si es necesario */}
-            </select>
-            <select
-              value={selectedSituation}
-              onChange={(e) => setSelectedSituation(e.target.value)}
-              className="select-box"
-            >
-              <option value="">Cualquier Situación</option>
-              <option value="Soltero">Soltero</option>
-              <option value="Casado">Casado</option>
-              {/* Agregar más opciones si es necesario */}
-            </select>
-
-            <select
-              multiple
-              value={selectedGenders}
-              onChange={(e) =>
-                setSelectedGenders(
-                  [...e.target.selectedOptions].map((option) => option.value)
-                )
-              }
-              className="select-box"
-            >
-              <option value="">Cualquier Género</option>
-              <option value="ROCK">Rock</option>
-              <option value="POP">Pop</option>
-              <option value="HIPHOP">Hip Hop</option>
-              {/* Agregar más opciones si es necesario */}
-            </select>
-
-            <label>Instrumentos:</label>
+            {/* Resto del código... */}
             <div>
               <label>
-                Piano:
-                <input
-                  type="number"
-                  min="0"
-                  value={selectedInstruments.piano}
-                  onChange={(e) =>
-                    setSelectedInstruments({
-                      ...selectedInstruments,
-                      piano: parseInt(e.target.value),
-                    })
-                  }
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Guitarra:
-                <input
-                  type="number"
-                  min="0"
-                  value={selectedInstruments.guitarra}
-                  onChange={(e) =>
-                    setSelectedInstruments({
-                      ...selectedInstruments,
-                      guitarra: parseInt(e.target.value),
-                    })
-                  }
-                />
-              </label>
-            </div>
+                Instrumentos:
+                {instrumentOptions.map((instrument) => (
+                  <div key={instrument}>
+                    <input
+                      type="checkbox"
+                      id={instrument}
+                      name={instrument}
+                      checked={selectedInstruments[instrument] === 0}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
 
-            {/* Agregar aquí el código JSX para los otros filtros, como Experiencia, ZodiacSign, etc. */}
+                        setSelectedInstruments((prev) => {
+                          if (checked) {
+                            return { ...prev, [instrument]: 0 };
+                          } else {
+                            const { [instrument]: omit, ...rest } = prev;
+                            return rest;
+                          }
+                        });
+                        console.log(selectedInstruments);
+                      }}
+                    />
+                    <label htmlFor={instrument}>{instrument}</label>
+                  </div>
+                ))}
+              </label>
+              <label>
+                Géneros Musicales:
+                {genreOptions.map((genre) => (
+                  <div key={genre}>
+                    <input
+                      type="checkbox"
+                      id={genre}
+                      name={genre}
+                      checked={selectedGenres.includes(genre)}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        setSelectedGenres((prev) =>
+                          checked
+                            ? [...prev, genre]
+                            : prev.filter((item) => item !== genre)
+                        );
+                      }}
+                    />
+                    <label htmlFor={genre}>{genre}</label>
+                  </div>
+                ))}
+              </label>
+            </div>
 
             <button
               type="button"

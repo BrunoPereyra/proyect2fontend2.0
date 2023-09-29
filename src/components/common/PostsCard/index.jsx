@@ -45,10 +45,8 @@ export default function PostsCard({ posts, id }) {
       </div>
       <p
         className="status"
-        // dangerouslySetInnerHTML={{ __html: posts.Status }}
-      >
-        {posts.Status}
-      </p>
+        dangerouslySetInnerHTML={{ __html: posts.Status }}
+      ></p>
       {posts.PostImage != "" ? (
         <img
           onClick={() => setImageModal(true)}
