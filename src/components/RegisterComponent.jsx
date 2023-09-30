@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { RegisterAPI } from "../api/AuthAPI";
-import { postUserData } from "../api/FirestoreAPI";
 import LinkedinLogo from "../assets/linkedinLogo.png";
 import { useNavigate } from "react-router-dom";
 import { getUniqueID } from "../helpers/getUniqueId";
@@ -12,7 +10,6 @@ export default function RegisterComponent() {
   const [credentails, setCredentials] = useState({});
   const register = async () => {
     try {
-      let res = await RegisterAPI(credentails.email, credentails.password);
       toast.success("Account Created!");
       postUserData({
         userID: getUniqueID(),

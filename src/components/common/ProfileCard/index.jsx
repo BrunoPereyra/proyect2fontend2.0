@@ -1,12 +1,10 @@
-import React, { useState,useEffect } from "react";
-import { getSingleStatus, getSingleUser } from "../../../api/FirestoreAPI";
+import React, { useState, useEffect } from "react";
 import PostsCard from "../PostsCard";
 import { HiOutlinePencil } from "react-icons/hi";
 import { useLocation } from "react-router-dom";
 import FileUploadModal from "../FileUploadModal";
-import { uploadImage as uploadImageAPI } from "../../../api/ImageUpload";
 
-import service from '../../../services/service';
+import service from "../../../services/service";
 
 import "./index.scss";
 
@@ -17,7 +15,7 @@ export default function ProfileCard({ onEdit, currentUser }) {
   const [currentImage, setCurrentImage] = useState({});
   const [progress, setProgress] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
-  const [userlocalStorage, setuserlocalStorage] = useState({})
+  const [userlocalStorage, setuserlocalStorage] = useState({});
   const getImage = (event) => {
     setCurrentImage(event.target.files[0]);
   };
@@ -30,14 +28,14 @@ export default function ProfileCard({ onEdit, currentUser }) {
       setCurrentImage
     );
   };
-  
+
   async function funcsetCurrentUser() {
     let loggedUser = window.localStorage.getItem("loggedAppUser");
     if (loggedUser) {
       const userStorage = JSON.parse(loggedUser);
       service.setToken(userStorage.token);
-      const res = await service.Currentuser()
-      setuserlocalStorage(res.data.data)
+      const res = await service.Currentuser();
+      setuserlocalStorage(res.data.data);
     } else {
       navigate("/login");
     }

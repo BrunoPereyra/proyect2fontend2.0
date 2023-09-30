@@ -10,7 +10,6 @@ import {
 } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { BsBriefcase } from "react-icons/bs";
-import ProfilePopup from "../ProfilePopup";
 import "./index.scss";
 import service from "../../../services/service";
 

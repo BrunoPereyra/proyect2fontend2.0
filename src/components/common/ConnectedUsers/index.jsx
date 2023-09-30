@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
-import { getConnections } from "../../../api/FirestoreAPI";
 
 export default function ConnectedUsers({ user, getCurrentUser, currentUser }) {
   const [isConnected, setIsConnected] = useState(false);

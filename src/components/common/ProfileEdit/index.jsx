@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { editProfile } from "../../../api/FirestoreAPI";
 import "./index.scss";
 
 export default function ProfileEdit({ onEdit, currentUser }) {
